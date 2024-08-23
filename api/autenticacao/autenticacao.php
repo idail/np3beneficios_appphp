@@ -8,6 +8,7 @@ $recebeSenhaCripografada = md5($recebeSenha);
 
 $id = "";
 $id_grupo_pessoafornecedor = "";
+$id_departamentofornecedor = "";
 $nome_grupo = "";
 $nome_usuario = "";
 
@@ -45,7 +46,18 @@ if($resultado_fornecedor)
     else
         $nome_grupo = "nao localizado";
 
-    $informacoes = ["nome" => $nome_usuario,"nome_grupo_usuario" => $nome_grupo, "codigo_usuario_autenticado" => $id];
+    $instrucaoBuscaCodigoDepartamentoFornecedor = "select departamento_unit_id from pessoa_departamento where pessoa_id = :recebe_codigo_usuario";
+    $comandoBuscaCodigoDepartamentoFornecedor = Conexao::Obtem()->prepare($instrucaoBuscaCodigoDepartamentoFornecedor);
+    $comandoBuscaCodigoDepartamentoFornecedor->bindValue(":recebe_codigo_usuario",$id);
+    $comandoBuscaCodigoDepartamentoFornecedor->execute();
+    $resultadoBuscaCodigoDepartamentoFornecedor = $comandoBuscaCodigoDepartamentoFornecedor->fetch(PDO::FETCH_ASSOC);
+
+    if($resultadoBuscaCodigoDepartamentoFornecedor)
+        $id_departamentofornecedor = $resultadoBuscaCodigoDepartamentoFornecedor["departamento_unit_id"];
+    else
+        $id_departamentofornecedor = "nao localizado";
+
+    $informacoes = ["nome" => $nome_usuario,"nome_grupo_usuario" => $nome_grupo, "codigo_usuario_autenticado" => $id, "codigo_departamento_fornecedor" => $id_departamentofornecedor];
 }
 else{
     $instrucaoBuscaGestor = "SELECT * FROM system_users where id not in(select system_user_id from pessoa) and login = :recebe_login_usuario and password = :recebe_senha_usuario";
