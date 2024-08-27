@@ -23,6 +23,7 @@ if($resultado_fornecedor)
 {
     $id = $resultado_fornecedor["id"];
     $nome_usuario = $resultado_fornecedor["name"];
+    $login_usuario = $resultado_fornecedor["login"];
 
     $instrucaoBuscaGPFornecedor = "select grupo_pessoa_id from pessoa_grupo where pessoa_id = :recebe_pessoa_id";
     $comandoBuscaGPFornecedor = Conexao::Obtem()->prepare($instrucaoBuscaGPFornecedor);
@@ -57,7 +58,8 @@ if($resultado_fornecedor)
     else
         $id_departamentofornecedor = "nao localizado";
 
-    $informacoes = ["nome" => $nome_usuario,"nome_grupo_usuario" => $nome_grupo, "codigo_usuario_autenticado" => $id, "codigo_departamento_fornecedor" => $id_departamentofornecedor];
+    $informacoes = ["nome" => $nome_usuario,"nome_grupo_usuario" => $nome_grupo, "codigo_usuario_autenticado" => $id, 
+    "codigo_departamento_fornecedor" => $id_departamentofornecedor, "login_usuario" => $login_usuario];
 }
 else{
     $instrucaoBuscaGestor = "SELECT * FROM system_users where id not in(select system_user_id from pessoa) and login = :recebe_login_usuario and password = :recebe_senha_usuario";
@@ -71,7 +73,8 @@ else{
     {
         $id = $resultado_gestor["id"];
         $nome_usuario = $resultado_gestor["name"];
-        $informacoes = ["nome" => $nome_usuario,"nome_grupo_usuario" => "Gestor", "codigo_usuario_autenticado" => $id];
+        $login_usuario = $resultado_gestor["login"];
+        $informacoes = ["nome" => $nome_usuario,"nome_grupo_usuario" => "Gestor", "codigo_usuario_autenticado" => $id, "login_usuario" => $login_usuario];
     }
 }
 

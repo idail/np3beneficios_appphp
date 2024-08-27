@@ -41,8 +41,10 @@ if(isset($_GET["codigo_departamento_fornecedor"]))
 
 if($tipo_acesso === "gestor")
 {
-    $instrucaoBuscaPedidosGestor = "SELECT DISTINCT p.id, p.dt_pedido, p.descricaopedido, ep.nome AS estado_pedido, p.valor_total, p.valor_total_cotacao FROM system_user_departamento_unit su INNER JOIN pedido p ON
-    su.departamento_unit_id = p.departamento_unit_id INNER JOIN estado_pedido ep ON p.estado_pedido_venda_id = ep.id WHERE p.system_users_id = :recebe_codigo_usuario AND ep.id = 13 ORDER BY `p`.`id` ASC";
+    $instrucaoBuscaPedidosGestor = "SELECT DISTINCT p.id, p.dt_pedido, p.descricaopedido, ep.nome AS estado_pedido, p.valor_total, p.valor_total_cotacao 
+    FROM system_user_departamento_unit su INNER JOIN pedido p ON
+    su.departamento_unit_id = p.departamento_unit_id INNER JOIN estado_pedido ep ON p.estado_pedido_venda_id = ep.id WHERE p.system_users_id = :recebe_codigo_usuario 
+    AND ep.id = 13 ORDER BY `p`.`id` ASC";
     $comandoBuscaPedidosGestor = Conexao::Obtem()->prepare($instrucaoBuscaPedidosGestor);
     $comandoBuscaPedidosGestor->bindValue(":recebe_codigo_usuario",$codigo);
     $comandoBuscaPedidosGestor->execute();
