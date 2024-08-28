@@ -74,7 +74,8 @@ else{
         $id = $resultado_gestor["id"];
         $nome_usuario = $resultado_gestor["name"];
         $login_usuario = $resultado_gestor["login"];
-        $informacoes = ["nome" => $nome_usuario,"nome_grupo_usuario" => "Gestor", "codigo_usuario_autenticado" => $id, "login_usuario" => $login_usuario];
+        $email_usuario = $resultado_gestor["email"];
+        $informacoes = ["nome" => $nome_usuario,"nome_grupo_usuario" => "Gestor", "codigo_usuario_autenticado" => $id, "login_usuario" => $login_usuario, "email_usuario" => $email_usuario];
     }
 }
 

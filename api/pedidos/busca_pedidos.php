@@ -3,8 +3,8 @@ require("../Conexao.php");
 $codigo = $_GET["codigo_usuario"];
 $tipo_acesso = $_GET["tipo_acesso"];
 
-if(isset($_GET["codigo_departamento_fornecedor"]))
-    $codigo_departamento_fornecedor = $_GET["codigo_departamento_fornecedor"];
+if(isset($_GET["codigo_fornecedor_departamento"]))
+    $codigo_departamento_fornecedor = $_GET["codigo_fornecedor_departamento"];
 
 /*SELECT DISTINCT p.id,p.dt_pedido,p.descricaopedido,ep.nome,p.valor_total,p.valor_total_cotacao FROM system_user_departamento_unit as 
     su inner join pedido as p on su.departamento_unit_id = p.departamento_unit_id inner join 
