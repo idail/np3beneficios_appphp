@@ -60,8 +60,7 @@ if($resultado_fornecedor)
 
     $informacoes = ["nome" => $nome_usuario,"nome_grupo_usuario" => $nome_grupo, "codigo_usuario_autenticado" => $id, 
     "codigo_departamento_fornecedor" => $id_departamentofornecedor, "login_usuario" => $login_usuario];
-}
-else{
+}else{
     $instrucaoBuscaGestor = "SELECT * FROM system_users where id not in(select system_user_id from pessoa) and login = :recebe_login_usuario and password = :recebe_senha_usuario";
     $comandoBuscaGestor = Conexao::Obtem()->prepare($instrucaoBuscaGestor);
     $comandoBuscaGestor->bindValue(":recebe_login_usuario",$recebeUsuario);
@@ -76,6 +75,8 @@ else{
         $login_usuario = $resultado_gestor["login"];
         $email_usuario = $resultado_gestor["email"];
         $informacoes = ["nome" => $nome_usuario,"nome_grupo_usuario" => "Gestor", "codigo_usuario_autenticado" => $id, "login_usuario" => $login_usuario, "email_usuario" => $email_usuario];
+    }else{
+        echo json_encode("nenhum usuario localizado");
     }
 }
 
