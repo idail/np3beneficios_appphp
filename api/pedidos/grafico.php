@@ -33,5 +33,27 @@ if($recebePerfilUsuario === "gestor" && $recebeCodigoUsuario != "")
     }
     $instrucaoBuscaValorCotacaoGestor = "select sum(valor_total_cotacao) from pedido as p 
     where p.system_users_id = recebe_codigo_usuario and ";
+}else if($recebePerfilUsuario === "fornecedor" && $recebeCodigoUsuario != "")
+{
+    if($recebeTipoBusca === "valor_cotacao_pago")
+    {
+        $instrucaoBuscaValorPago = "select sum(valor_total_cotacao) from pedido as p where p.cliente_id = :recebe_codigo_usuario AND estado_pedido_venda_id IN (13, 8)";
+        $comandoBuscarValorPago = Conexao::Obtem()->prepare($instrucaoBuscaValorPago);
+        $comandoBuscarValorPago->bindValue(":recebe_codigo_usuario",$recebeCodigoUsuario);
+        $comandoBuscarValorPago->execute();
+        $resultadoValorPago = $comandoBuscarValorPago->fetchAll(PDO::FETCH_ASSOC);
+
+        if($resultadoValorPago)
+            echo json_encode($resultadoValorPago);
+    }else{
+        $instrucaoBuscaValorAberto = "select sum(valor_total_cotacao) from pedido as p where p.cliente_id = :recebe_codigo_usuario AND estado_pedido_venda_id IN (13, 8, 11)";
+        $comandoBuscarValorAberto = Conexao::Obtem()->prepare($instrucaoBuscaValorAberto);
+        $comandoBuscarValorAberto->bindValue(":recebe_codigo_usuario",$recebeCodigoUsuario);
+        $comandoBuscarValorAberto->execute();
+        $resultadoValorAberto = $comandoBuscarValorAberto->fetchAll(PDO::FETCH_ASSOC);
+
+        if($resultadoValorAberto)
+            echo json_encode($resultadoValorAberto);
+    }
 }
 ?>
