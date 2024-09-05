@@ -6,9 +6,22 @@ $codigo_usuario = $_GET["codigo_usuario"];
 
 if($perfil === "gestor")
 {
-    $instrucaoBuscaEnderecoGestor = "select sunit.rua,sunit.numero,c.nome,e.nome from system_unit as sunit inner join 
-    system_users as su on sunit.id = su.system_unit_id inner join cidade as c on sunit.cidade_id = c.id
-     inner join estado as e on c.estado_id = e.id where su.id = :recebe_codigo_usuario";
+    // $instrucaoBuscaEnderecoGestor = "select sunit.rua,sunit.numero,c.nome,e.nome from system_unit as sunit inner join 
+    // system_users as su on sunit.id = su.system_unit_id inner join cidade as c on sunit.cidade_id = c.id
+    //  inner join estado as e on c.estado_id = e.id where su.id = :recebe_codigo_usuario";
+    // $comandoBuscaEnderecoGestor = Conexao::Obtem()->prepare($instrucaoBuscaEnderecoGestor);
+    // $comandoBuscaEnderecoGestor->bindValue(":recebe_codigo_usuario",$codigo_usuario);
+    // $comandoBuscaEnderecoGestor->execute();
+    // $resultadoBuscaEnderecoGestor = $comandoBuscaEnderecoGestor->fetch(PDO::FETCH_ASSOC);
+
+    // if($resultadoBuscaEnderecoGestor)
+    //     echo json_encode($resultadoBuscaEnderecoGestor);
+
+    $instrucaoBuscaEnderecoGestor = "select sunit.rua,sunit.numero,c.nome,e.nome from system_unit as sunit 
+    inner join system_users su on su.system_unit_id = sunit.id
+    inner join departamento_unit as du on du.id = su.id
+    inner join cidade as c on du.cidade_id = c.id
+    inner join estado as e on c.estado_id = e.id where su.id = :recebe_codigo_usuario";
     $comandoBuscaEnderecoGestor = Conexao::Obtem()->prepare($instrucaoBuscaEnderecoGestor);
     $comandoBuscaEnderecoGestor->bindValue(":recebe_codigo_usuario",$codigo_usuario);
     $comandoBuscaEnderecoGestor->execute();
