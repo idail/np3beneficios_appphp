@@ -57,7 +57,7 @@ if($tipo_acesso === "gestor")
     $resultado_gestor = $comandoBuscaPedidosGestor->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($resultado_gestor);
 }else{
-    $instrucaoBuscaPedidoFornecedor = "SELECT DISTINCT pe.id,pe.dt_pedido,pe.descricaopedido,ep.nome,pe.valor_total,pe.valor_total_cotacao
+    $instrucaoBuscaPedidoFornecedor = "SELECT DISTINCT pe.id,pe.dt_pedido,pe.descricaopedido,ep.nome AS estado_pedido,pe.valor_total,pe.valor_total_cotacao
     FROM system_users su
     INNER JOIN pessoa p ON su.id = p.system_user_id
     INNER JOIN pessoa_departamento pd ON su.id = pd.pessoa_id
