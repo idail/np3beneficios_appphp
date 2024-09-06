@@ -74,12 +74,22 @@ if($resultado_fornecedor)
         $nome_usuario = $resultado_gestor["name"];
         $login_usuario = $resultado_gestor["login"];
         $email_usuario = $resultado_gestor["email"];
-        $informacoes = ["nome" => $nome_usuario,"nome_grupo_usuario" => "Gestor", "codigo_usuario_autenticado" => $id, "login_usuario" => $login_usuario, "email_usuario" => $email_usuario];
+        
+        $instrucaoSql = "select * from system_user_departamento_unit where system_users_id = :id";
+        $comandoBuscaGestor = Conexao::Obtem()->prepare($instrucaoSql);
+        $comandoBuscaGestor->bindValue(":id",$id);
+        $comandoBuscaGestor->execute();
+        $resultado_departamentos_gestor = $comandoBuscaGestor->fetchAll(PDO::FETCH_ASSOC);
+
+        $informacoes = ["nome" => $nome_usuario,"nome_grupo_usuario" => "Gestor", "codigo_usuario_autenticado" => $id, "login_usuario" => $login_usuario, "email_usuario" => $email_usuario, 
+        "departamentos" => $resultado_departamentos_gestor];
+
+        echo json_encode($informacoes);
     }else{
         echo json_encode("nenhum usuario localizado");
     }
 }
 
-if(!empty($informacoes))
-echo json_encode($informacoes);
+// if(!empty($informacoes))
+// echo json_encode($informacoes);
 ?>
